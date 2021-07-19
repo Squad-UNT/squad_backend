@@ -15,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/login", require("./routes/login"));
+app.use("/addstore", require("./routes/addstore"));
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
