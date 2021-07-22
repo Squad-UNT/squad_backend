@@ -31,35 +31,46 @@ router.post("/", [
     } else next();
   },
   (req, res, next) => {
-    db.query(
-      `SELECT admin_password FROM stores where admin_email = '${req.body.email}'`,
-      (err, result) => {
-        if (err) throw err;
-        if (result.length > 0) {
-          bcrypt.compare(
-            req.body.password,
-            result[0].admin_password,
-            (err, result) => {
-              if (result == true) {
-                return res.status(200).send({
-                  email: req.body.email,
-                  is_super_admin: false,
-                  token: "onk93vo2n6j5uv6on6q8c",
-                });
-              } else
-                return res
-                  .status(401)
-                  .send({ message: "Invalid Email or Password" });
-            }
-          );
-        } else
-          return res.status(401).send({ message: "Invalid Email or Password" });
-      }
-    );
-  },
-  (req, res, next) => {
     try {
-      res.status(200).send({ message: "success login!" });
+      db.query(
+        `SELECT store_id, store_name, admin_password FROM stores where admin_email = '${req.body.email}'`,
+        (err, result) => {
+          if (err) throw err;
+          if (result.length > 0) {
+            const store_name = result[0].store_name;
+            const store_id = result[0].store_id;
+            bcrypt.compare(
+              req.body.password,
+              result[0].admin_password,
+              (err, result) => {
+                if (result == true) {
+                  const access_token = getRandomToken();
+                  db.query(
+                    `UPDATE stores SET access_token = '${access_token}' WHERE admin_email = '${req.body.email}'`,
+                    (error, results) => {
+                      if (error) throw error;
+
+                      return res.status(200).send({
+                        email: req.body.email,
+                        is_super_admin: false,
+                        token: access_token,
+                        store_name,
+                        store_id,
+                      });
+                    }
+                  );
+                } else
+                  return res
+                    .status(401)
+                    .send({ message: "Invalid Email or Password" });
+              }
+            );
+          } else
+            return res
+              .status(401)
+              .send({ message: "Invalid Email or Password" });
+        }
+      );
     } catch (error) {
       next(error);
     }

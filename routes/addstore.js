@@ -10,7 +10,6 @@ function getRandomPassword() {
 
 router.post("/", [
   (req, res, next) => {
-    console.log(req);
     if (!req.headers.token)
       return res.status(400).send({ message: "Auth Token not found" });
     else next();
@@ -59,17 +58,13 @@ router.post("/", [
 
           email.sendMail(mailOptions, (error, info) => {
             if (error) throw error;
-            else next();
+            else
+              return res
+                .status(200)
+                .send({ message: "successfully added store!" });
           });
         }
       );
-    } catch (error) {
-      next(error);
-    }
-  },
-  (req, res, next) => {
-    try {
-      res.status(200).send({ message: "successfully added store!" });
     } catch (error) {
       next(error);
     }
