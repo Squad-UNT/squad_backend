@@ -15,7 +15,8 @@ router.post("/", [
       db.query(
         `SELECT store_id FROM stores WHERE access_token = '${req.headers.token}'`,
         (error, result) => {
-          if (error) throw error;
+          if (error)
+            return res.status(500).send({ message: "Internal Server Error" });
           if (result.length > 0) {
             const data = {
               store_id: result[0].store_id,
@@ -42,7 +43,10 @@ router.post("/", [
                 data.description,
               ],
               (error, results) => {
-                if (error) throw error;
+                if (error)
+                  return res
+                    .status(500)
+                    .send({ message: "Internal Server Error" });
                 return res
                   .status(200)
                   .send({ message: "successfully added item!" });

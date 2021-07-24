@@ -45,7 +45,8 @@ router.post("/", [
           hash,
         ],
         (error, results) => {
-          if (error) throw error;
+          if (error)
+            return res.status(500).send({ message: "Internal Server Error" });
 
           var mailOptions = {
             from: "squadunt@gmail.com",
@@ -57,7 +58,8 @@ router.post("/", [
           };
 
           email.sendMail(mailOptions, (error, info) => {
-            if (error) throw error;
+            if (error)
+              return res.status(500).send({ message: "Internal Server Error" });
             else
               return res
                 .status(200)

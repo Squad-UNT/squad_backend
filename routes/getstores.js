@@ -6,9 +6,10 @@ router.post("/", [
   (req, res, next) => {
     try {
       db.query(
-        `SELECT * FROM stores WHERE is_retail = ${req.body.is_retail}`,
+        `SELECT * FROM stores WHERE is_retail = ${req.body.is_retail ? 1 : 0}`,
         (error, results) => {
-          if (error) throw error;
+          if (error)
+            return res.status(500).send({ message: "Internal Server Error" });
           let result = [];
           for (const entry of results) {
             result.push({

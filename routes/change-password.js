@@ -22,7 +22,8 @@ router.post("/", [
       db.query(
         `SELECT admin_password FROM stores where admin_email = '${req.body.email}'`,
         (err, result) => {
-          if (err) throw err;
+          if (err)
+            return res.status(500).send({ message: "Internal Server Error" });
           if (result.length > 0) {
             bcrypt.compare(
               req.body.old,
@@ -33,7 +34,10 @@ router.post("/", [
                   db.query(
                     `UPDATE stores SET admin_password = '${hash}' WHERE admin_email = '${req.body.email}'`,
                     (error, results) => {
-                      if (error) throw error;
+                      if (error)
+                        return res
+                          .status(500)
+                          .send({ message: "Internal Server Error" });
                       else
                         return res
                           .status(200)

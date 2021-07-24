@@ -19,7 +19,8 @@ router.post("/", [
       db.query(
         `SELECT store_name FROM stores where admin_email = '${req.body.email}'`,
         (err, result) => {
-          if (err) throw err;
+          if (err)
+            return res.status(500).send({ message: "Internal Server Error" });
           if (result.length > 0) {
             const password = getRandomPassword();
             const hash = bcrypt.hashSync(password, 10);
@@ -27,7 +28,10 @@ router.post("/", [
             db.query(
               `UPDATE stores SET admin_password = '${hash}' WHERE admin_email = '${req.body.email}'`,
               (error, results) => {
-                if (error) throw error;
+                if (error)
+                  return res
+                    .status(500)
+                    .send({ message: "Internal Server Error" });
 
                 var mailOptions = {
                   from: "squadunt@gmail.com",
@@ -39,7 +43,10 @@ router.post("/", [
                 };
 
                 email.sendMail(mailOptions, (error, info) => {
-                  if (error) throw error;
+                  if (error)
+                    return res
+                      .status(500)
+                      .send({ message: "Internal Server Error" });
                   else
                     return res
                       .status(200)

@@ -35,7 +35,8 @@ router.post("/", [
       db.query(
         `SELECT store_id, store_name, admin_password FROM stores where admin_email = '${req.body.email}'`,
         (err, result) => {
-          if (err) throw err;
+          if (err)
+            return res.status(500).send({ message: "Internal Server Error" });
           if (result.length > 0) {
             const store_name = result[0].store_name;
             const store_id = result[0].store_id;
@@ -48,7 +49,10 @@ router.post("/", [
                   db.query(
                     `UPDATE stores SET access_token = '${access_token}' WHERE admin_email = '${req.body.email}'`,
                     (error, results) => {
-                      if (error) throw error;
+                      if (error)
+                        return res
+                          .status(500)
+                          .send({ message: "Internal Server Error" });
 
                       return res.status(200).send({
                         email: req.body.email,

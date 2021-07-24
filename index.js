@@ -19,11 +19,15 @@ app.use("/forgot-password", require("./routes/forgot-password"));
 app.use("/change-password", require("./routes/change-password"));
 app.use("/addstore", require("./routes/addstore"));
 app.use("/getstores", require("./routes/getstores"));
+app.use("/getstore", require("./routes/getstore"));
+app.use("/updatestore", require("./routes/updatestore"));
+app.use("/deletestore", require("./routes/deletestore"));
 app.use("/getitems", require("./routes/getitems"));
 app.use("/getitem", require("./routes/getitem"));
 app.use("/additem", require("./routes/additem"));
 app.use("/updateitem", require("./routes/updateitem"));
 app.use("/deleteitem", require("./routes/deleteitem"));
+app.use("/search", require("./routes/search"));
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

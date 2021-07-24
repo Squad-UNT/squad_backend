@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
 const db = require("../db.js");
-const email = require("../email.js");
 
 router.post("/", [
   (req, res, next) => {
@@ -15,7 +13,8 @@ router.post("/", [
       db.query(
         `SELECT store_id FROM stores WHERE access_token = '${req.headers.token}'`,
         (error, result) => {
-          if (error) throw error;
+          if (error)
+            return res.status(500).send({ message: "Internal Server Error" });
           if (result.length > 0) {
             const data = {
               store_id: result[0].store_id,
@@ -35,7 +34,10 @@ router.post("/", [
             else
               sql = `UPDATE items SET item_name = '${data.name}', item_price = '${data.price}', item_availability = '${data.type}', item_calories = '${data.calories}', item_ingredients = '${data.ingredients}', available_at = '${data.location}', item_image = NULL, item_description = '${data.description}' WHERE store_id = '${data.store_id}' AND item_id = '${data.id}'`;
             db.query(sql, (error, results) => {
-              if (error) throw error;
+              if (error)
+                return res
+                  .status(500)
+                  .send({ message: "Internal Server Error" });
               return res
                 .status(200)
                 .send({ message: "successfully updated item!" });
