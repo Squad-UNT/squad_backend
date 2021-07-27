@@ -37,7 +37,7 @@ router.post("/", [
       if (req.body.image)
         sql = `UPDATE stores SET store_name = '${data.name}', admin_email = '${data.email}',hall_price = '${data.price}', store_timing = '${data.timings}', is_retail = '${data.type}', store_location = '${data.location}', store_image = '${data.image}' WHERE store_id = '${data.store_id}'`;
       else
-        sql = `UPDATE stores SET store_name = '${data.name}', admin_email = '${data.email}',hall_price = '${data.price}', store_timing = '${data.timings}', is_retail = '${data.type}', store_location = '${data.location}', store_image = NULL WHERE store_id = '${data.store_id}'`;
+        sql = `UPDATE stores SET store_name = '${data.name}', admin_email = '${data.email}',hall_price = '${data.price}', store_timing = '${data.timings}', is_retail = '${data.type}', store_location = '${data.location}' WHERE store_id = '${data.store_id}'`;
 
       db.query(sql, (error, results) => {
         if (error)
