@@ -34,12 +34,31 @@ router.post("/", [
         image: req.body.image,
       };
       let sql;
-      if (req.body.image)
-        sql = `UPDATE stores SET store_name = '${data.name}', admin_email = '${data.email}',hall_price = '${data.price}', store_timing = '${data.timings}', is_retail = '${data.type}', store_location = '${data.location}', store_image = '${data.image}' WHERE store_id = '${data.store_id}'`;
-      else
-        sql = `UPDATE stores SET store_name = '${data.name}', admin_email = '${data.email}',hall_price = '${data.price}', store_timing = '${data.timings}', is_retail = '${data.type}', store_location = '${data.location}' WHERE store_id = '${data.store_id}'`;
-
-      db.query(sql, (error, results) => {
+      if (req.body.image) {
+        sql = `UPDATE stores SET store_name = ?, admin_email = ?,hall_price = ?, store_timing = ?, is_retail = ?, store_location = ?, store_image = ? WHERE store_id = ?`;
+        sqll = [
+          data.name,
+          data.email,
+          data.price,
+          data.timings,
+          data.type,
+          data.location,
+          data.image,
+          data.store_id,
+        ];
+      } else {
+        sql = `UPDATE stores SET store_name = ?, admin_email = ?,hall_price = ?, store_timing = ?, is_retail = ?, store_location = ? WHERE store_id = ?`;
+        sqll = [
+          data.name,
+          data.email,
+          data.price,
+          data.timings,
+          data.type,
+          data.location,
+          data.store_id,
+        ];
+      }
+      db.query(sql, sqll, (error, results) => {
         if (error)
           return res.status(500).send({ message: "Internal Server Error" });
 

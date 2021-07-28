@@ -19,7 +19,19 @@ router.post("/", [
             return res.status(500).send({ message: "Internal Server Error" });
           if (result.length == 0)
             return res.status(404).send({ message: "No Item" });
-          return res.status(200).send(result[0]);
+          db.query(
+            `SELECT * FROM stores WHERE store_id = ${result[0].store_id}`,
+            (error, results) => {
+              if (error)
+                return res
+                  .status(500)
+                  .send({ message: "Internal Server Error" });
+              if (results.length == 0)
+                return res.status(404).send({ message: "No Store" });
+              result[0].store = results[0];
+              return res.status(200).send(result[0]);
+            }
+          );
         }
       );
     } catch (error) {

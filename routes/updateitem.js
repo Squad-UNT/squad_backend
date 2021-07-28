@@ -29,11 +29,35 @@ router.post("/", [
               id: req.body.id,
             };
             let sql;
-            if (req.body.image)
-              sql = `UPDATE items SET item_name = '${data.name}', item_price = '${data.price}', item_availability = '${data.type}', item_calories = '${data.calories}', item_ingredients = '${data.ingredients}', available_at = '${data.location}', item_image = '${data.image}', item_description = '${data.description}' WHERE store_id = '${data.store_id}' AND item_id = '${data.id}'`;
-            else
-              sql = `UPDATE items SET item_name = '${data.name}', item_price = '${data.price}', item_availability = '${data.type}', item_calories = '${data.calories}', item_ingredients = '${data.ingredients}', available_at = '${data.location}', item_description = '${data.description}' WHERE store_id = '${data.store_id}' AND item_id = '${data.id}'`;
-            db.query(sql, (error, results) => {
+            if (req.body.image) {
+              sql = `UPDATE items SET item_name = ?, item_price = ?, item_availability = ?, item_calories = ?, item_ingredients = ?, available_at = ?, item_image = ?, item_description = ? WHERE store_id = ? AND item_id = ?`;
+              sqll = [
+                data.name,
+                data.price,
+                data.type,
+                data.calories,
+                data.ingredients,
+                data.location,
+                data.image,
+                data.description,
+                data.store_id,
+                data.id,
+              ];
+            } else {
+              sql = `UPDATE items SET item_name = ?, item_price = ?, item_availability = ?, item_calories = ?, item_ingredients = ?, available_at = ?, item_description = ? WHERE store_id = ? AND item_id = ?`;
+              sqll = [
+                data.name,
+                data.price,
+                data.type,
+                data.calories,
+                data.ingredients,
+                data.location,
+                data.description,
+                data.store_id,
+                data.id,
+              ];
+            }
+            db.query(sql, sqll, (error, results) => {
               if (error)
                 return res
                   .status(500)

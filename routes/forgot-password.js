@@ -17,7 +17,8 @@ router.post("/", [
   (req, res, next) => {
     try {
       db.query(
-        `SELECT store_name FROM stores where admin_email = '${req.body.email}'`,
+        `SELECT store_name FROM squad.stores WHERE admin_email = ?`,
+        [req.body.email],
         (err, result) => {
           if (err)
             return res.status(500).send({ message: "Internal Server Error" });
