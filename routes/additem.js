@@ -1,8 +1,8 @@
+// This file contains code to add item to database after token is validated.
+
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
 const db = require("../db.js");
-const email = require("../email.js");
 
 router.post("/", [
   (req, res, next) => {

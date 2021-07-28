@@ -1,3 +1,5 @@
+// This file contains port details and code to all backend routing.
+
 const express = require("express");
 var cors = require("cors");
 

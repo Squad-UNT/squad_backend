@@ -1,3 +1,5 @@
+// This file contains code to update store in database after token is validated and send email which contains updated password to login.
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");

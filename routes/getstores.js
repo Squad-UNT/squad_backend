@@ -1,3 +1,5 @@
+// This file contains code to get stores of dining halls or retail stores from database.
+
 const express = require("express");
 const router = express.Router();
 const db = require("../db.js");

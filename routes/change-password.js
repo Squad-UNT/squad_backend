@@ -1,3 +1,5 @@
+// This file contains code to change password in database after old password is validated.
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");

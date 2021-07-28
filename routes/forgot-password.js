@@ -1,3 +1,5 @@
+// This file contains code to update new password in database after forgot password, email is validated and new generated password is updated in database and sent to email.
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");

@@ -1,3 +1,5 @@
+// This file contains code to login and send a token after successful login.
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");

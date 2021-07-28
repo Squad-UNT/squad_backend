@@ -1,3 +1,5 @@
+// This file contains code to get search results from database.
+
 const express = require("express");
 const router = express.Router();
 const db = require("../db.js");

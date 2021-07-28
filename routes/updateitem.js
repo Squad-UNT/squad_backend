@@ -1,3 +1,5 @@
+// This file contains code to update item in database after token is validated.
+
 const express = require("express");
 const router = express.Router();
 const db = require("../db.js");

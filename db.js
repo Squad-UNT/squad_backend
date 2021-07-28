@@ -1,3 +1,5 @@
+// This file contains database credentials and code to connect to database.
+
 const mysql = require("mysql");
 
 const db = mysql.createConnection({
