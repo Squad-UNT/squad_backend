@@ -51,9 +51,7 @@ router.post("/", [
               }
             );
           } else
-            return res
-              .status(401)
-              .send({ message: "Invalid Email or Password" });
+            return res.status(401).send({ message: "Email Does Not Exist" });
         }
       );
     } catch (error) {
